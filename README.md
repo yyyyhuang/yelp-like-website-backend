@@ -1,2 +1,2 @@
-snapshot1.jpg
-snapshot2.jpg
+!(snapshot1.jpg)
+!(snapshot2.jpg)
