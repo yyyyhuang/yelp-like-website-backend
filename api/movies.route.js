@@ -9,6 +9,7 @@ router.route("/id/:id").get(MovieController.apiGetMovieById);
 router.route("/ratings").get(MovieController.apiGetRatings);
 
 router.route("/review").post(ReviewsControllers.apiPostReview);
-router.route("review").put(ReviewsControllers.apiUpdateReview);
+router.route("/review").put(ReviewsControllers.apiUpdateReview);
+router.route("/review").delete(ReviewsControllers.apiDeleteReview);
 
 export default router; // to be used by other server.js

@@ -9,7 +9,7 @@ export default class ReviewsController {
             const userInfo = {
                 name: req.body.name,
                 _id: req.body.user_id
-            }
+            };
         
 
             const date = new Date();
@@ -34,10 +34,57 @@ export default class ReviewsController {
     }
 
     static async apiUpdateReview(req, res, next) {
-        // TODO:
+        try {
+            const reviewId = req.body.review_id;
+            const review = req.body.review;
+            const userInfo = {
+                name: req.body.name,
+                _id: req.body.user_id
+            }
+
+            const date = new Date();
+
+            const updateResponse = await ReviewsDAO.updateReview(
+                reviewId,
+                userInfo._id,
+                review,
+                date
+            );
+
+            var { error } = updateResponse;
+            console.log(error);
+            if (error || updateResponse.modifiedCount == 0) {
+                res.status(500).json({ error: "Unable to update review."});
+            } else {
+                res.json({ status: "success"});
+            }
+        } catch(e) {
+            res.status(500).json({ error: e.message});
+        }
     }
 
     static async apiDeleteReview(req, res, next) {
-        // TODO:
+        try {
+            const reviewId = req.body.review_id;
+            const userInfo = {
+                name: req.body.name,
+                _id: req.body.user_id
+            };
+
+            const deleteResponse = await ReviewsDAO.deleteReview(
+                reviewId,
+                userInfo._id
+            );
+
+            var { error } = deleteResponse;
+            console.log(error);
+            if (error) {
+                res.status(500).json({ error: "Unable to delete review."});
+            } else {
+                res.json({ status: "success"});
+            }
+        } catch(e) {
+            res.status(500).json({ error: e.message});
+        }
     }
 }
