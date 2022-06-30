@@ -1,5 +1,5 @@
 import MoviesDAO from "../dao/moviesDAO.js";
-
+// get data needed from request -> pass to dao -> return the response from dao to front end
 export default class MoviesController {
 
     static async apiGetMovies(req, res, next) { // next - refers to a callback function that can be called when this methods execution completes

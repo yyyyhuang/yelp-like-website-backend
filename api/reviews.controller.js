@@ -65,19 +65,19 @@ export default class ReviewsController {
 
     static async apiDeleteReview(req, res, next) {
         try {
+           
             const reviewId = req.body.review_id;
             const userInfo = {
                 name: req.body.name,
                 _id: req.body.user_id
             };
-
+            
             const deleteResponse = await ReviewsDAO.deleteReview(
                 reviewId,
                 userInfo._id
             );
 
             var { error } = deleteResponse;
-            console.log(error);
             if (error) {
                 res.status(500).json({ error: "Unable to delete review."});
             } else {

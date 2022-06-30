@@ -3,7 +3,7 @@ import mongodb from "mongodb";
 import dotenv from "dotenv";
 import MoviesDAO from './dao/moviesDAO.js';
 import ReviewsDAO from './dao/reviewsDAO.js';
-
+// connect to db and pass db to dao
 async function main() { // async in order to use await later
     dotenv.config(); // set up environment variables with reference to the .env
     // mongodb objext
