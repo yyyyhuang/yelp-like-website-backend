@@ -20,6 +20,7 @@ export default class FavoritesDAO {
                 { upsert: true }
             )
             return updateResponse
+            
         }
         catch(e) {
             console.error(`Unable to update favorites: ${e}`);
