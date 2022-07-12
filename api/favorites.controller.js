@@ -14,9 +14,6 @@ export default class FavoritesController {
                 res.status(500).json({ error });
             }
 
-            if (FavoritesResponse.modifiedCount === 0) {
-                throw new Error ("Unable to update favorites.")
-            }
             res.json({ status: "success"});
         } catch(e) {
             res.status(500).json({ error: e.message })
