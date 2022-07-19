@@ -34,4 +34,22 @@ export default class FavoritesController {
             res.status(500).json({ error : e});
         }
     }
+    /*
+    static async apiRetrieveFavorites(req, res, next) {
+        try {
+            const favorites = await FavoritesDAO.getAll(req.params.userId);
+
+            var { error } = favorites;
+            if (error) {
+                res.status(500).json({ error });
+            }
+            res.json(favorites);
+        }
+        catch(e) {
+            res.status(500).json({ error: e.message })
+        }
+    }
+    */
+
+    
 }

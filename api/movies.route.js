@@ -21,4 +21,8 @@ router
     .route("/favorites/:userId")
     .get(FavoritesController.apiGetFavorites);
 
+    /*
+router
+    .route("/favoritesList")
+    .get(FavoritesController.apiRetrieveFavorites); */
 export default router; // to be used by other server.js

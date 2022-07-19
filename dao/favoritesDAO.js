@@ -1,3 +1,4 @@
+// const mongoose = require('mongoose');
 let favoritesCollection;
 
 export default class FavoritesDAO {
@@ -41,4 +42,33 @@ export default class FavoritesDAO {
             throw e;
         }
     }
+    /*
+    static async getAll(id) {
+        mongoose.connect((process.env.MOVIEREVIEWS_NS).collection('favorites'),
+        {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useFindAndModify: false
+        });
+
+        const movieSchema = new mongoose.Schema({
+            title: String,
+            poster: String
+        })
+
+        const favoritesSchema = new mongoose.Schema({
+            favorites: [{ type: Schema.Types.ObjectId,  ref: "Movie" }]
+        });
+
+        // const Movie = mongoose.model('Movie', movieSchema);
+        const favorites = mongoose.model('Favorites', favoritesSchema);
+
+        const response = await favorites.findOne({_id: id})
+            .populate('favorites')
+            .then(p=>console.log(p))
+            .catch(error=>console.log(error));
+        
+        return response.favorites;
+    }
+    */
 }
