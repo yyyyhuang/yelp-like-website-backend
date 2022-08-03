@@ -1,5 +1,5 @@
 {
-  "name": "yingjiehuang---backend",
+  "name": "hungry---backend",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.ccs.neu.edu/NEU-CS5610-SU22/YingjieHuang---backend.git"
+    "url": "https://github.ccs.neu.edu/NEU-CS5610-SU22/2--milk-fronend.git"
   },
   "author": "",
   "license": "ISC",
@@ -18,7 +18,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
-    "mongodb": "^4.6.0",
+    "mongodb": "^4.8.1",
     "mongoose": "^6.4.4"
   }
 }

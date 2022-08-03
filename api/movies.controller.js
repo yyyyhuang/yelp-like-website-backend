@@ -1,4 +1,4 @@
-import MoviesDAO from "../dao/moviesDAO.js";
+import MoviesDAO from "../dao/restaurantsDAO.js";
 // get data needed from request -> pass to dao -> return the response from dao to front end
 export default class MoviesController {
 

@@ -1,57 +1,57 @@
 import mongodb from "mongodb";
 const ObjectId = mongodb.ObjectId
 
-let movies;
+let restaurants;
 
-export default class MoviesDAO {
+export default class RestaurantsDAO {
     static async injectDB(conn) { // conn - database connection
-        if (movies) {
+        if (restaurants) {
             return;
         }
         try {
-            movies = await conn.db(process.env.MOVIEREVIEWS_NS) // get movies
-                            .collection('movies');
+            restaurants = await conn.db(process.env.MOVIEREVIEWS_NS) // get movies
+                            .collection('businesses');
         } catch(e) {
-            console.log(`Unable tp connect in MoviesDAO: ${e}`);
+            console.log(`Unable tp connect in RestaurantsDAO: ${e}`);
         }
     }
 
-    static async getMovies({
+    static async getRestaurants({
         filters = null, // default params in case arg is under-specified
         page = 0,
-        moviesPerPage = 20,
+        restaurantsPerPage = 20,
     } = {}) { // empty pbject is default parameter in case arg is undefined
         
         // construct query  whether "title" and "rated" filter values exist
         let query;
         if (filters) {
-            if ("title" in filters) { // title and rated are filter values
-                query = { $text: { $search: filters['title']}};
-            } else if ("rated" in filters) {
-                query = { "rated": { $eq: filters['rated']}}
+            if ("name" in filters) { // title and rated are filter values
+                query = { $text: { $search: filters['name']}};
+            } else if ("review_count" in filters) {
+                query = { "review_count": { $eq: filters['review_count']}}
             }
         }
 
         // make actual query using MongoDB cursor object
         let cursor;
         try { //  await keyword enables asynchronous requests to be made in strict sequence without holding up other JS event loop processes
-            cursor = await movies.find(query)
-                                 .limit(moviesPerPage)
-                                 .skip(moviesPerPage * page);
-            const moviesList = await cursor.toArray(); // convert query to array
-            const totalNumMovies = await movies.countDocuments(query);
-            return {moviesList, totalNumMovies};
+            cursor = await restaurants.find(query)
+                                 .limit(restaurantsPerPage)
+                                 .skip(restaurantsPerPage * page);
+            const restaurantsList = await cursor.toArray(); // convert query to array
+            const totalNumRestaurants = await businesses.countDocuments(query);
+            return {restaurantsList, totalNumRestaurants};
         } catch(e) {
             console.error(`Unable to issue find command, ${e}`);
-            return {moviesList: [], totalNumMovies: 0};
+            return {restaurantsList: [], totalNumRestaurants: 0};
         }
-
     }
 
+    //******************** */
     static async getRatings() {
         let ratings = [];
         try {
-            ratings = await movies.distinct("rated"); // get a list of posible values for the "rating" attribute
+            ratings = await restaurantsList.distinct("review_count"); // get a list of posible values for the "rating" attribute
             return ratings;
         } catch(e) {
             console.error(`Unable to get ratings, ${e}`);
@@ -59,9 +59,9 @@ export default class MoviesDAO {
         }
     }
 
-    static async getMovieById(id) {
+    static async getRestaurantById(id) {
         try {
-            return await movies.aggregate([
+            return await restaurants.aggregate([
                 {
                     $match: {
                         _id: new ObjectId(id),
@@ -71,7 +71,7 @@ export default class MoviesDAO {
                     $lookup: {
                         from: 'reviews',
                         localField: '_id',
-                        foreignField: 'movie_id',
+                        foreignField: 'business_id',
                         as: 'reviews',
                     }
                 }
