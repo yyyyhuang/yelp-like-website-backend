@@ -9,7 +9,7 @@ export default class RestaurantsDAO {
             return;
         }
         try {
-            restaurants = await conn.db(process.env.MOVIEREVIEWS_NS) // get restaurants
+            restaurants = await conn.db(process.env.RESTAURANTREVIEWS_NS) // get restaurants
                             .collection('businesses');
         } catch(e) {
             console.log(`Unable tp connect in RestaurantsDAO: ${e}`);
