@@ -9,7 +9,7 @@ export default class RestaurantsDAO {
             return;
         }
         try {
-            restaurants = await conn.db(process.env.MOVIEREVIEWS_NS) // get movies
+            restaurants = await conn.db(process.env.MOVIEREVIEWS_NS) // get restaurants
                             .collection('businesses');
         } catch(e) {
             console.log(`Unable tp connect in RestaurantsDAO: ${e}`);
@@ -19,16 +19,15 @@ export default class RestaurantsDAO {
     static async getRestaurants({
         filters = null, // default params in case arg is under-specified
         page = 0,
-        restaurantsPerPage = 20,
-    } = {}) { // empty pbject is default parameter in case arg is undefined
+        restaurantsPerPage = 9,
+        } = {}) { // empty pbject is default parameter in case arg is undefined
         
-        // construct query  whether "title" and "rated" filter values exist
         let query;
         if (filters) {
-            if ("name" in filters) { // title and rated are filter values
+            if ("name" in filters) {
                 query = { $text: { $search: filters['name']}};
-            } else if ("review_count" in filters) {
-                query = { "review_count": { $eq: filters['review_count']}}
+            } else if ("stars" in filters) {
+                query = { "stars": { $eq: filters['stars']}}
             }
         }
 
@@ -51,7 +50,7 @@ export default class RestaurantsDAO {
     static async getRatings() {
         let ratings = [];
         try {
-            ratings = await restaurantsList.distinct("review_count"); // get a list of posible values for the "rating" attribute
+            ratings = await restaurantsList.distinct("stars"); // get a list of posible values for the "stars" attribute
             return ratings;
         } catch(e) {
             console.error(`Unable to get ratings, ${e}`);
@@ -77,7 +76,7 @@ export default class RestaurantsDAO {
                 }
             ]).next();
         } catch(e) {
-            console.error(`Somthing went wrong in getMovieById: ${e}`);
+            console.error(`Somthing went wrong in getRestaurantById: ${e}`);
             throw e;
         }
     }

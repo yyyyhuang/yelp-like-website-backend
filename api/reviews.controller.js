@@ -4,7 +4,7 @@ export default class ReviewsController {
 
     static async apiPostReview(req, res, next) {
         try {
-            const movieId = req.body.movie_id;
+            const restaurantId = req.body.business_id;
             const review = req.body.review;
             const userInfo = {
                 name: req.body.name,
@@ -15,7 +15,7 @@ export default class ReviewsController {
             const date = new Date();
 
             const reviewResponse = await ReviewsDAO.addReview(
-                movieId,
+                restaurantId,
                 userInfo,
                 review,
                 date
@@ -53,7 +53,7 @@ export default class ReviewsController {
 
             var { error } = updateResponse;
             console.log(error);
-            if (error || updateResponse.modifiedCount == 0) {
+            if (error || updateResponse.modifiedCount < 1) {
                 res.status(500).json({ error: "Unable to update review."});
             } else {
                 res.json({ status: "success"});

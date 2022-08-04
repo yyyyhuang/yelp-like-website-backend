@@ -12,7 +12,7 @@ export default class ReviewsDAO {
         try {
             reviews = await conn.db(process.env.MOVIEREVIEWS_NS).collection('reviews');
         } catch(e) {
-            console.error(`Unable to establish connection handle in reviewsDA: ${e}`);
+            console.error(`Unable to establish connection handle in reviewsDAO: ${e}`);
         }
     }
 
@@ -23,7 +23,7 @@ export default class ReviewsDAO {
                 user_id: user._id,
                 date: date,
                 review: review,
-                business_id: ObjectId(movieId),
+                business_id: ObjectId(restaurantId),
                 stars: stars
             }
             return await reviews.insertOne(reviewDoc);
@@ -41,7 +41,7 @@ export default class ReviewsDAO {
                 { $set: { review: review, date: date, stars: stars } },
               )
         
-            return updateResponse
+            return updateResponse;
 
         } catch(e) {
             console.log(`Unable to update review: ${e}`)
