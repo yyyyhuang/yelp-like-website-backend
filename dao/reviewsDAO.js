@@ -15,15 +15,14 @@ export default class ReviewsDAO {
             console.error(`Unable to establish connection handle in reviewsDA: ${e}`);
         }
     }
-
+    /* confirm business_id format */
     static async addReview(restaurantId, user, review, date, stars) {
         try {
             const reviewDoc = {
-                name: user.name,
                 user_id: user._id,
                 date: date,
-                review: review,
-                business_id: ObjectId(movieId),
+                text: review,
+                business_id: restaurantId,
                 stars: stars
             }
             return await reviews.insertOne(reviewDoc);
@@ -37,8 +36,8 @@ export default class ReviewsDAO {
     static async updateReview(reviewId, userId, review, date, stars) {
         try {
             const updateResponse = await reviews.updateOne(
-                { user_id: userId, _id: ObjectId(reviewId)},
-                { $set: { review: review, date: date, stars: stars } },
+                { user_id: userId, review_id: reviewId},
+                { $set: { text: review, date: date, stars: stars } },
               )
         
             return updateResponse
@@ -52,7 +51,7 @@ export default class ReviewsDAO {
     static async deleteReview(reviewId, userId) {
         try {
             const deleteResponse = await reviews.deleteOne({
-                _id: ObjectId(reviewId),
+                review_id: reviewId,
                 user_id: userId
             });
             return deleteResponse;

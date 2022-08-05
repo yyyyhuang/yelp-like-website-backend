@@ -1,6 +1,6 @@
 import express from 'express'; // Express application
 import cors from 'cors'; // Cross-Origin Resource Sharing (CORS)
-import restaurants from './api/movies.route.js';
+import restaurants from './api/restaurants.route.js';
 
 const app = express();
 // adds various functionality

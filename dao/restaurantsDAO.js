@@ -70,7 +70,7 @@ export default class RestaurantsDAO {
                 {
                     $lookup: {
                         from: 'reviews',
-                        localField: '_id',
+                        localField: 'business_id',
                         foreignField: 'business_id',
                         as: 'reviews',
                     }
