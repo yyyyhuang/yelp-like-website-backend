@@ -1,5 +1,5 @@
 import mongodb from "mongodb";
-const ObjectId = mongodb.ObjectId
+const ObjectId = mongodb.ObjectId;
 
 let restaurants;
 
@@ -58,7 +58,7 @@ export default class RestaurantsDAO {
                 {
                     $lookup: {
                         from: 'reviews',
-                        localField: 'business_id',
+                        localField: '_id',
                         foreignField: 'business_id',
                         as: 'reviews',
                     }
@@ -67,6 +67,17 @@ export default class RestaurantsDAO {
         } catch(e) {
             console.error(`Somthing went wrong in getRestaurantById: ${e}`);
             throw e;
+        }
+    }
+
+    static async getRatings() {
+        let ratings = [];
+        try {
+            ratings = await restaurantsList.distinct("stars"); // get a list of posible values for the "stars" attribute
+            return ratings;
+        } catch(e) {
+            console.error(`Unable to get ratings, ${e}`);
+            return ratings;
         }
     }
 }
