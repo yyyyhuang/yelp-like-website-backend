@@ -1,28 +1,31 @@
 import express from 'express'; // using express's router functionality
-import MovieController from './movies.controller.js';
-import ReviewsControllers from './reviews.controller.js';
-import FavoritesController from './favorites.controller.js';
+import RestaurantsController from './restaurants.controller.js';
+import ReviewsController from './reviews.controller.js';
+import UsersController from './users.controller.js';
+import CollectionsController from './collections.controller.js';
 
 // "routing" refers to handling requests
 const router = express.Router(); // get access to express router
 
-router.route("/").get(MovieController.apiGetMovies); // a GET request to the / 
-router.route("/id/:id").get(MovieController.apiGetMovieById);
-router.route("/ratings").get(MovieController.apiGetRatings);
+router.route("/").get(RestaurantsController.apiGetRestaurants); // a GET request to the / 
+router.route("/id/:id").get(RestaurantsController.apiGetRestaurantById);
+router.route("/ratings").get(RestaurantsController.apiGetRatings);
 
-router.route("/review").post(ReviewsControllers.apiPostReview);
-router.route("/review").put(ReviewsControllers.apiUpdateReview);
-router.route("/review").delete(ReviewsControllers.apiDeleteReview);
+router.route("/review").post(ReviewsController.apiPostReview);
+router.route("/review").put(ReviewsController.apiUpdateReview);
+router.route("/review").delete(ReviewsController.apiDeleteReview);
 
-router
-    .route("/favorites")
-    .put(FavoritesController.apiUpdateFavorites);
-router
-    .route("/favorites/:userId")
-    .get(FavoritesController.apiGetFavorites);
+router.route("/user/id/:id").get(UsersController.apiGetUserById);
 
-    /*
-router
-    .route("/favoritesList")
-    .get(FavoritesController.apiRetrieveFavorites); */
+router.route("/user").post(UsersController.apiCreateUser);
+router.route("/user").put(UsersController.apiUpdateUser);
+router.route("/user").delete(UsersController.apiDeleteUser);
+
+router.route("/collections").post(CollectionsController.apiCreateCollection);
+router.route("/collections").put(CollectionsController.apiUpdateCollection);
+router.route("/collections").delete(CollectionsController.apiDeleteCollection);
+router.route("/collections").get(CollectionsController.apiGetCollectionsByUserId);
+router.route("/collections/id/:collectionId").get(CollectionsController.apiGetFavoritesByCollectionId);
+
+
 export default router; // to be used by other server.js

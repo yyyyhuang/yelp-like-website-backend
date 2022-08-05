@@ -10,9 +10,9 @@ export default class ReviewsDAO {
             return;
         }
         try {
-            reviews = await conn.db(process.env.MOVIEREVIEWS_NS).collection('reviews');
+            reviews = await conn.db(process.env.RESTAURANTREVIEWS_NS).collection('reviews');
         } catch(e) {
-            console.error(`Unable to establish connection handle in reviewsDA: ${e}`);
+            console.error(`Unable to establish connection handle in reviewsDAO: ${e}`);
         }
     }
     /* confirm business_id format */
@@ -40,7 +40,7 @@ export default class ReviewsDAO {
                 { $set: { text: review, date: date, stars: stars } },
               )
         
-            return updateResponse
+            return updateResponse;
 
         } catch(e) {
             console.log(`Unable to update review: ${e}`)
