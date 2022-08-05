@@ -61,7 +61,7 @@ export default class UsersDAO {
         let cursor;
         try {
             cursor = await users.find(
-                { _id: id }
+                { _id: ObjectId(id) }
             );
             const user = await cursor.toArray();
             return user[0];

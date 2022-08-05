@@ -1,3 +1,6 @@
+import mongodb from "mongodb";
+const ObjectId = mongodb.ObjectId;
+
 let collections;
 
 export default class CollectionsDAO {
@@ -85,7 +88,7 @@ export default class CollectionsDAO {
         let cursor;
         try {
             cursor = await collections.find(
-                { _id: id }
+                { _id: ObjectId(id) }
             );
             const favorites = await cursor.toArray();
             return favorites[0];
