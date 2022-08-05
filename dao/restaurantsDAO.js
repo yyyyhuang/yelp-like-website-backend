@@ -46,17 +46,6 @@ export default class RestaurantsDAO {
         }
     }
 
-    //******************** */
-    static async getRatings() {
-        let ratings = [];
-        try {
-            ratings = await restaurantsList.distinct("stars"); // get a list of posible values for the "stars" attribute
-            return ratings;
-        } catch(e) {
-            console.error(`Unable to get ratings, ${e}`);
-            return ratings;
-        }
-    }
 
     static async getRestaurantById(id) {
         try {

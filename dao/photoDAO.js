@@ -10,7 +10,7 @@ export default class PhotoDAO {
             return;
         }
         try {
-            reviews = await conn.db(process.env.MOVIEREVIEWS_NS).collection('photo');
+            reviews = await conn.db(process.env.RESTAURANTREVIEWS_NS).collection('photo');
         } catch(e) {
             console.error(`Unable to establish connection handle in photoDAO: ${e}`);
         }
@@ -18,24 +18,16 @@ export default class PhotoDAO {
 
 
     static async getPhoto(businessId) {
+        let cursor;
         try {
-            return await restaurants.aggregate([
-                {
-                    $match: {
-                        _id: new ObjectId(businessId),
-                    }
-                },
-                {
-                    $lookup: {
-                        from: 'photo',
-                        localField: 'business_id',
-                        foreignField: 'business_id',
-                        as: 'photo',
-                    }
-                }
-            ]).next();
+            cursor = await photo.find(
+                { business_id: businessId }
+            );
+            const photo = await cursor.toArray();
+            const photo_id = photo[0].photo_id;
+            return photo_id; //???????????//
         } catch(e) {
-            console.error(`Somthing went wrong in getMovieById: ${e}`);
+            console.error(`Something went wrong in getFavoritesByCollectionId: ${e}`);
             throw e;
         }
     }
