@@ -38,7 +38,7 @@ export default class CollectionsDAO {
             return updateResponse
         }
         catch(e) {
-            console.error(`Unable to update collections: ${e}`);
+            console.error(`Unable to update collection: ${e}`);
             return { error: e };
         }
     }

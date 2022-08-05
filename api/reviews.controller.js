@@ -5,20 +5,20 @@ export default class ReviewsController {
     static async apiPostReview(req, res, next) {
         try {
             const restaurantId = req.body.business_id;
-            const review = req.body.review;
+            const text = req.body.text;
             const userInfo = {
                 name: req.body.name,
                 _id: req.body.user_id
             };
-        
-
+            const stars = req.body.stars;
             const date = new Date();
 
             const reviewResponse = await ReviewsDAO.addReview(
                 restaurantId,
                 userInfo,
-                review,
-                date
+                text,
+                date,
+                stars
             );
 
             var { error } = reviewResponse;
@@ -36,19 +36,20 @@ export default class ReviewsController {
     static async apiUpdateReview(req, res, next) {
         try {
             const reviewId = req.body.review_id;
-            const review = req.body.review;
+            const text = req.body.text;
             const userInfo = {
                 name: req.body.name,
                 _id: req.body.user_id
             }
-
             const date = new Date();
+            const stars = req.body.stars;
 
             const updateResponse = await ReviewsDAO.updateReview(
                 reviewId,
                 userInfo._id,
-                review,
-                date
+                text,
+                date,
+                stars
             );
 
             var { error } = updateResponse;

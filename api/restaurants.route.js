@@ -1,7 +1,7 @@
 import express from 'express'; // using express's router functionality
 import RestaurantsController from './restaurants.controller.js';
 import ReviewsController from './reviews.controller.js';
-import UsersController from './favorites.controller.js';
+import UsersController from './users.controller.js';
 import CollectionsController from './collections.controller.js';
 
 // "routing" refers to handling requests
@@ -21,9 +21,9 @@ router.route("/user").post(UsersController.apiCreateUser);
 router.route("/user").put(UsersController.apiUpdateUser);
 router.route("/user").delete(UsersController.apiDeleteUser);
 
-router.route("/collections").post(CollectionsController.apiCreateCollections);
-router.route("/collections").put(CollectionsController.apiUpdateCollections);
-router.route("/collections").delete(CollectionsController.apiUpdateCollections);
+router.route("/collections").post(CollectionsController.apiCreateCollection);
+router.route("/collections").put(CollectionsController.apiUpdateCollection);
+router.route("/collections").delete(CollectionsController.apiDeleteCollection);
 router.route("/collections").get(CollectionsController.apiGetCollectionsByUserId);
 router.route("/collections/id/:collectionId").get(CollectionsController.apiGetFavoritesByCollectionId);
 
