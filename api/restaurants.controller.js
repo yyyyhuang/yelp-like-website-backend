@@ -4,7 +4,7 @@ export default class RestaurantsController {
 
     static async apiGetRestaurants(req, res, next) { // next - refers to a callback function that can be called when this methods execution completes
         const restaurantsPerPage = req.query.restaurantsPerPage ?
-            parseInt(req.query.restaurantsPerPage) : 9;
+            parseInt(req.query.restaurantsPerPage) : 20;
         const page = req.query.page ? parseInt(req.query.page) : 0;
 
         let filters = {} 

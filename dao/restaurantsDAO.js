@@ -38,7 +38,7 @@ export default class RestaurantsDAO {
                                  .limit(restaurantsPerPage)
                                  .skip(restaurantsPerPage * page);
             const restaurantsList = await cursor.toArray(); // convert query to array
-            const totalNumRestaurants = await businesses.countDocuments(query);
+            const totalNumRestaurants = await restaurants.countDocuments(query);
             return {restaurantsList, totalNumRestaurants};
         } catch(e) {
             console.error(`Unable to issue find command, ${e}`);
@@ -69,4 +69,10 @@ export default class RestaurantsDAO {
             throw e;
         }
     }
+    /*
+    static async getRestautantsByCuisine(cuisine) {
+        let query;
+
+    }
+    */
 }
