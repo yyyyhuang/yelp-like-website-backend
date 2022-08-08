@@ -19,16 +19,17 @@ export default class RestaurantsDAO {
     static async getRestaurants({
         filters = null, // default params in case arg is under-specified
         page = 0,
-        restaurantsPerPage = 9,
+        restaurantsPerPage = 20,
         } = {}) { // empty pbject is default parameter in case arg is undefined
         
         let query;
         if (filters) {
             if ("name" in filters) {
                 query = { $text: { $search: filters['name']}};
-            } else if ("stars" in filters) {
-                query = { "stars": { $eq: filters['stars']}}
-            }
+            } 
+            // else if ("stars" in filters) {
+            //     query = { "stars": { $eq: filters['stars']}}
+            // }
         }
 
         // make actual query using MongoDB cursor object
@@ -52,13 +53,13 @@ export default class RestaurantsDAO {
             return await restaurants.aggregate([
                 {
                     $match: {
-                        _id: new ObjectId(id),
+                        business_id: id,
                     }
                 },
                 {
                     $lookup: {
                         from: 'reviews',
-                        localField: '_id',
+                        localField: 'business_id',
                         foreignField: 'business_id',
                         as: 'reviews',
                     }

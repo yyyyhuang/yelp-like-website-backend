@@ -10,8 +10,9 @@ export default class RestaurantsController {
         let filters = {} 
         if (req.query.name) { // attributes of the req.query object
             filters.name = req.query.name;
-        } else if (req.query.stars) {
-            filters.stars = req.query.stars;
+        } 
+        else if (req.query.categories) {
+            filters.categories = req.query.categories;
         }
         // make the request to the RestaurantsDAO object using its getRestaurant method
         // return a single page's worth of restaurants in a list along with a total number of restaurants found
