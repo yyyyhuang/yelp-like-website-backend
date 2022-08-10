@@ -63,6 +63,15 @@ export default class RestaurantsDAO {
                         foreignField: 'business_id',
                         as: 'reviews',
                     }
+                },
+                {
+                    $lookup:
+                    {
+                        from:'photos',
+                        localField: 'business_id',
+                        foreignField: 'business_id',
+                        as:'photos',
+                    }
                 }
             ]).next();
         } catch(e) {
