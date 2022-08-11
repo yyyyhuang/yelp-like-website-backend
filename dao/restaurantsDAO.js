@@ -24,8 +24,10 @@ export default class RestaurantsDAO {
         
         let query;
         if (filters) {
+            console.log(filters);
             if ("name" in filters) {
                 query = { $text: { $search: filters['name']}};
+                console.log("query: " + JSON.stringify(query));
             } 
             // else if ("stars" in filters) {
             //     query = { "stars": { $eq: filters['stars']}}
