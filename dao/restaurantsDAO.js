@@ -22,12 +22,12 @@ export default class RestaurantsDAO {
         restaurantsPerPage = 20,
         } = {}) { // empty pbject is default parameter in case arg is undefined
         
+        restaurants.createIndex( { name: "text" } );
+
         let query;
         if (filters) {
-            console.log(filters);
             if ("name" in filters) {
                 query = { $text: { $search: filters['name']}};
-                console.log("query: " + JSON.stringify(query));
             } 
             // else if ("stars" in filters) {
             //     query = { "stars": { $eq: filters['stars']}}
