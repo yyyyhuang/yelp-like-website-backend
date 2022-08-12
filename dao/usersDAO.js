@@ -1,4 +1,5 @@
 import mongodb from "mongodb";
+import bcrypt from "bcrypt";
 const ObjectId = mongodb.ObjectId;
 
 let users;
@@ -16,11 +17,13 @@ export default class UsersDAO {
         }
     }
 
-    static async addUser(name, date) {
+    static async addUser(user_id, name, email, password) {
         try {
             const userDoc = {
+                user_id: user_id,
                 name: name,
-                yelping_since: date
+                email: email,
+                password: bcrypt.hashSync(password, 10)
             }
             return await users.insertOne(userDoc);
         }
@@ -30,10 +33,10 @@ export default class UsersDAO {
         }
     }
 
-    static async updateUser(userId, name) {
+    static async updateUser(user_id, name) {
         try {
             const updateResponse = await users.updateOne(
-                { _id: ObjectId(userId) },
+                { user_id: user_id },
                 { $set: { name: name }},
                 { upsert: true }
             )
@@ -61,10 +64,24 @@ export default class UsersDAO {
         let cursor;
         try {
             cursor = await users.find(
-                { _id: ObjectId(id) }
+                { user_id: id }
             );
             const user = await cursor.toArray();
             return user[0];
+        } catch(e) {
+            console.error(`Something went wrong in getUserById: ${e}`);
+            throw e;
+        }
+    }
+
+    static async checkDuplicate(email) {
+        let cursor;
+        try {
+            cursor = await users.find(
+                { email: email }
+            );
+            const existingUser = await cursor.toArray();
+            return existingUser[0];
         } catch(e) {
             console.error(`Something went wrong in getUserById: ${e}`);
             throw e;

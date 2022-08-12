@@ -3,10 +3,11 @@ import UsersDAO from "../dao/usersDAO.js";
 export default class UsersController {
     static async apiCreateUser(req, res, next) {
         try {
-            const userName = req.body.name;
-            const date = new Date();
+            const user_id = req.body.user_id;
+            const userName = req.body.name
+            const password = req.body.password;
 
-            const userResponse = await UsersDAO.addUser(userName, date);
+            const userResponse = await UsersDAO.addUser(user_id, userName, password);
 
             var { error } = userResponse;
             console.log(error);
@@ -22,7 +23,7 @@ export default class UsersController {
 
     static async apiUpdateUser(req, res, next) {
         try {
-            const userId = req.body._id;
+            const userId = req.body.user_id;
             const name = req.body.name;
 
             const updateResponse = await UsersDAO.updateUser(userId, name);
@@ -59,10 +60,10 @@ export default class UsersController {
     
     static async apiGetUserById(req, res, next) {
         try {
-            let id = req.params._id;
+            let id = req.body.user_id;
             let user = await UsersDAO.getUserById(id);
             if (!user) {
-                res.status(404).json({ error: "not found" });
+                // res.status(404).json({ error: "not found" });
                 return;
             }
             res.json(user);
