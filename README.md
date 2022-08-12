@@ -1,6 +1,26 @@
 # 2% Milk Team - Yelp-Like Restaurant Recommendation Website
 # Team members: Yingjie Huang, Wanqing Guo
 
+**Iteration 2**
+1. Progress
+    - Data:
+        - procress raw data JSON file, upload photos to AWS S3, connect AWS S3 url to photo and restaurant database, upload local database to MongoDB Atlas
+    - Backend:
+        - Set up register and login controller and DAO
+        - Add photo controller to get all photos for each restaurant
+2. Members' contribution
+    - Yingjie Huang:
+        - Implement photo controllers and DAO
+    - Wanqing Guo:
+        - Process raw dataset, connect AWS S3 contents to database, deploy database to cloud
+        - implement register and login
+        - update README
+
+3. Screenshots of progress
+    <img width="1440" alt="atlas_1" src="/screenshot/atlas_1.png">
+    <img width="1440" alt="atlas_2" src="/screenshot/atlas_2.png">
+
+
 **Iteration 1**
 
 1. Progress
