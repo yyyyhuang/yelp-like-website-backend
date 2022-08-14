@@ -17,11 +17,10 @@ router.route("/review").delete(ReviewsController.apiDeleteReview);
 
 router.route("/user/id/:id").get(UsersController.apiGetUserById);
 
+router.route("/user").post(UsersController.apiCreateUser);
 router.route("/user").put(UsersController.apiUpdateUser);
 router.route("/user").delete(UsersController.apiDeleteUser);
 
-router.route("/user/register").post(UsersController.apiCreateUser);
-// router.route("/user/login").post();
 
 router.route("/collections").post(CollectionsController.apiCreateCollection);
 router.route("/collections").put(CollectionsController.apiUpdateCollection);
