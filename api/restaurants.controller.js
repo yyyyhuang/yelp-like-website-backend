@@ -17,7 +17,7 @@ export default class RestaurantsController {
         }
         // make the request to the RestaurantsDAO object using its getRestaurant method
         // return a single page's worth of restaurants in a list along with a total number of restaurants found
-        const { restaurantsList, totalNumRestaurants } = await RestaurantsDAO.getRestaurants({ filters, page, restaurantsPerPage, x, y});
+        const { restaurantsList, totalNumRestaurants } = await RestaurantsDAO.getRestaurants({ filters, page, restaurantsPerPage});
         // take the information retrieved by the DAO
         let response = {
             restaurants: restaurantsList,
@@ -29,6 +29,25 @@ export default class RestaurantsController {
         res.json(response); // put that into the HTTP response object as JSON
         // will be sent back to the client who queried the API
     }
+
+    static async apiGetByDistance(req, res, next) {
+        const restaurantsPerPage = req.query.restaurantsPerPage ?
+            parseInt(req.query.restaurantsPerPage) : 20;
+        const page = req.query.page ? parseInt(req.query.page) : 0;
+        const x = parseFloat(req.query.x);
+        const y = parseFloat(req.query.y);
+        const distance = parseInt(req.query.distance);
+        const { restaurantsList, totalNumRestaurants } = await RestaurantsDAO.getByDistance({ page, restaurantsPerPage, x, y, distance});
+        let response = {
+            restaurants: restaurantsList,
+            page: page,
+            entries_per_page: restaurantsPerPage,
+            total_results: totalNumRestaurants,
+        };
+        res.json(response);
+
+    }
+
 
     static async apiGetRestaurantById(req, res, next) {
         try {

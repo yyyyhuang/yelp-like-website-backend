@@ -20,9 +20,9 @@ export default class RestaurantsDAO {
         filters = null, // default params in case arg is under-specified
         page = 0,
         restaurantsPerPage = 20,
-        } = {}) { // empty pbject is default parameter in case arg is undefined
+        } = {}) { // empty object is default parameter in case arg is undefined
         
-        // restaurants.createIndex( { coordinate : "2d" } );
+        
         
         restaurants.createIndex( { name: "text" } );
 
@@ -46,10 +46,34 @@ export default class RestaurantsDAO {
                                         .skip(restaurantsPerPage * page);
 
             const restaurantsList = await cursor.toArray(); // convert query to array
-            const totalNumRestaurants = await restaurants.count(query);
+            const totalNumRestaurants = await restaurants.countDocuments(query);
             return {restaurantsList, totalNumRestaurants};
         } catch(e) {
             console.error(`Unable to issue find command, ${e}`);
+            return {restaurantsList: [], totalNumRestaurants: 0};
+        }
+    }
+
+    static async getByDistance({
+        page = 0,
+        restaurantsPerPage = 20,
+        x,
+        y,
+        distance
+    }){
+        restaurants.createIndex( { coordinate : "2d" } );
+        let query = {coordinate : { $near : [x, y], $maxDistance: distance/3959 } }
+        let cursor;
+        try {
+            cursor = await restaurants.find(query)
+                                    .limit(restaurantsPerPage)
+                                    .skip(restaurantsPerPage * page);
+            
+            const restaurantsList = await cursor.toArray();
+            const totalNumRestaurants = await restaurants.count(query);
+            return {restaurantsList, totalNumRestaurants};
+        } catch(e) {
+            console.error(`Unable to issue find command in getByDistance, ${e}`);
             return {restaurantsList: [], totalNumRestaurants: 0};
         }
     }
