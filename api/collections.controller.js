@@ -73,7 +73,7 @@ export default class CollectionsController {
             let id = req.params.user_id;
             let collections = await CollectionsDAO.getCollectionsByUserId(id);
             if (!collections) {
-                res.status(404).json({ error: "not found" });
+                // res.status(404).json({ error: "not found" });
                 return;
             }
             res.json(collections);
