@@ -22,9 +22,13 @@ export default class RestaurantsDAO {
         restaurantsPerPage = 20,
         } = {}) { // empty pbject is default parameter in case arg is undefined
         
+        // restaurants.createIndex( { coordinate : "2d" } );
+        
         restaurants.createIndex( { name: "text" } );
 
         let query;
+        //  = {coordinate : { $near : [x, y], $maxDistance: 0.0025 } }
+                    
         if (filters) {
             if ("name" in filters) {
                 query = { $text: { $search: filters['name']}};
@@ -38,10 +42,11 @@ export default class RestaurantsDAO {
         let cursor;
         try { //  await keyword enables asynchronous requests to be made in strict sequence without holding up other JS event loop processes
             cursor = await restaurants.find(query)
-                                 .limit(restaurantsPerPage)
-                                 .skip(restaurantsPerPage * page);
+                                        .limit(restaurantsPerPage)
+                                        .skip(restaurantsPerPage * page);
+
             const restaurantsList = await cursor.toArray(); // convert query to array
-            const totalNumRestaurants = await restaurants.countDocuments(query);
+            const totalNumRestaurants = await restaurants.count(query);
             return {restaurantsList, totalNumRestaurants};
         } catch(e) {
             console.error(`Unable to issue find command, ${e}`);

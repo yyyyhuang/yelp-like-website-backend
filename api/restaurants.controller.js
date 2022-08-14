@@ -6,7 +6,8 @@ export default class RestaurantsController {
         const restaurantsPerPage = req.query.restaurantsPerPage ?
             parseInt(req.query.restaurantsPerPage) : 20;
         const page = req.query.page ? parseInt(req.query.page) : 0;
-
+        // const x = parseFloat(req.query.x);
+        // const y = parseFloat(req.query.y);
         let filters = {} 
         if (req.query.name) { // attributes of the req.query object
             filters.name = req.query.name;
@@ -16,7 +17,7 @@ export default class RestaurantsController {
         }
         // make the request to the RestaurantsDAO object using its getRestaurant method
         // return a single page's worth of restaurants in a list along with a total number of restaurants found
-        const { restaurantsList, totalNumRestaurants } = await RestaurantsDAO.getRestaurants({ filters, page, restaurantsPerPage });
+        const { restaurantsList, totalNumRestaurants } = await RestaurantsDAO.getRestaurants({ filters, page, restaurantsPerPage, x, y});
         // take the information retrieved by the DAO
         let response = {
             restaurants: restaurantsList,
