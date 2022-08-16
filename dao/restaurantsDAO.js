@@ -69,7 +69,7 @@ export default class RestaurantsDAO {
             cursor = await restaurants.find(query)
                                     .limit(restaurantsPerPage)
                                     .skip(restaurantsPerPage * page);
-            
+
             const restaurantsList = await cursor.toArray();
             const totalNumRestaurants = await restaurants.count(query);
             return {restaurantsList, totalNumRestaurants};

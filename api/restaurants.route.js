@@ -26,8 +26,8 @@ router.route("/user").delete(UsersController.apiDeleteUser);
 router.route("/collections").post(CollectionsController.apiCreateCollection);
 router.route("/collections").put(CollectionsController.apiUpdateCollection);
 router.route("/collections").delete(CollectionsController.apiDeleteCollection);
-router.route("/collections").get(CollectionsController.apiGetCollectionsByUserId);
-router.route("/collections/id/:collectionId").get(CollectionsController.apiGetFavoritesByCollectionId);
+router.route("/collections/:user_id").get(CollectionsController.apiGetCollectionsByUserId);
+router.route("/collections/id/:id").get(CollectionsController.apiGetFavoritesByCollectionId);
 
 
 export default router; // to be used by other server.js
