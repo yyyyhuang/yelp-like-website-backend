@@ -10,7 +10,7 @@ const router = express.Router(); // get access to express router
 router.route("/").get(RestaurantsController.apiGetRestaurants); // a GET request to the / 
 router.route("/id/:id").get(RestaurantsController.apiGetRestaurantById);
 router.route("/ratings").get(RestaurantsController.apiGetRatings);
-router.route("/distance/:distance").get(RestaurantsController.apiGetByDistance);
+router.route("/distance").get(RestaurantsController.apiGetByDistance);
 
 router.route("/review").post(ReviewsController.apiPostReview);
 router.route("/review").put(ReviewsController.apiUpdateReview);

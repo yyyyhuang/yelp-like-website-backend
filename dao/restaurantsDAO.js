@@ -62,7 +62,8 @@ export default class RestaurantsDAO {
         distance
     }){
         restaurants.createIndex( { coordinate : "2d" } );
-        let query = {coordinate : { $near : [x, y], $maxDistance: distance/3959 } }
+        let query = { coordinate : { $near : [x, y], $maxDistance: distance/3959 } }
+         
         let cursor;
         try {
             cursor = await restaurants.find(query)
