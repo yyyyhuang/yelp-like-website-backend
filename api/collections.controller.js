@@ -3,10 +3,11 @@ import CollectionsDAO from "../dao/collectionsDAO.js";
 export default class CollectionsController {
     static async apiCreateCollection(req, res, next) {
         try {
-            const userId = req.body.user_id;
+            
+            const user_id = req.body.user_id;
             const name = req.body.name;
 
-            const collectionResponse = await CollectionsDAO.addCollection(userId, name);
+            const collectionResponse = await CollectionsDAO.addCollection(user_id, name);
 
             var { error } = collectionResponse;
             console.log(error);
@@ -85,10 +86,12 @@ export default class CollectionsController {
      
     static async apiGetFavoritesByCollectionId(req, res, next) {
         try {
-            let id = req.params._id;
+            console.log(req.params.id);
+            let id = req.params.id;
+            console.log(id);
             let favorites = await CollectionsDAO.getFavoritesByCollectionId(id);
             if (!favorites) {
-                res.status(404).json({ error: "not found" });
+                // res.status(404).json({ error: "not found" });
                 return;
             }
             res.json(favorites);

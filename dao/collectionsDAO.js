@@ -16,11 +16,11 @@ export default class CollectionsDAO {
         }
     }
 
-    static async addCollection(user, collectionName) {
+    static async addCollection(user_id, collectionName) {
         try {
             const collectionDoc = {
+                user_id: user_id,
                 name: collectionName,
-                user_id: user._id,
                 favorites: []
             }
             return await collections.insertOne(collectionDoc);
@@ -62,22 +62,13 @@ export default class CollectionsDAO {
     }
 
     static async getCollectionsByUserId(id) {
+        let cursor;
         try {
-            return await collections.aggregate([
-                {
-                    $match: {
-                        user_id: id,
-                    }
-                },
-                {
-                    $lookup: {
-                        from: 'collections',
-                        localField: 'user_id',
-                        foreignField: 'user_id',
-                        as: 'collections',
-                    }
-                }
-            ]).next();
+            cursor = await collections.find(
+                { user_id: id }
+            );
+            const myCollections = await cursor.toArray();
+            return myCollections;
         } catch(e) {
             console.error(`Something went wrong in getCollectionsByUserId: ${e}`);
             throw e;
