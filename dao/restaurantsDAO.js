@@ -94,6 +94,15 @@ export default class RestaurantsDAO {
                         localField: 'business_id',
                         foreignField: 'business_id',
                         as: 'reviews',
+                        let: {'business_id': '$business_id'},
+                        pipeline:[
+                            {           
+                                $match: {'$expr': { '$eq': [ '$business_id', '$$business_id'] }}
+                            },
+                            {
+                                $sort :{ 'date' : -1 }
+                            }
+                        ]
                     }
                 },
                 {
