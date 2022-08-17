@@ -58,16 +58,49 @@ export default class UsersDAO {
     }
 
     static async getUserById(id) {
-        let cursor;
+        // let cursor;
         try {
-            cursor = await users.find(
-                { user_id: id }
-            );
-            const user = await cursor.toArray();
-            return user[0];
+            return await users.aggregate([
+                {
+                    $match: {
+                        user_id: id,
+                    }
+                },
+                {
+                    $lookup: {
+                        from: 'reviews',
+                        localField: 'user_id',
+                        foreignField: 'user_id',
+                        as: 'reviews',
+                    }
+                },
+            ]).next();
         } catch(e) {
             console.error(`Something went wrong in getUserById: ${e}`);
             throw e;
         }
     }
+
+    // static async getReviewsById(id) {
+    //     try {
+    //         return await users.aggregate([
+    //             {
+    //                 $match: {
+    //                     user_id: id,
+    //                 }
+    //             },
+    //             {
+    //                 $lookup: {
+    //                     from: 'reviews',
+    //                     localField: 'user_id',
+    //                     foreignField: 'user_id',
+    //                     as: 'reviews',
+    //                 }
+    //             },
+    //         ]).next();
+    //     } catch(e) {
+    //         console.error(`Somthing went wrong in getRestaurantById: ${e}`);
+    //         throw e;
+    //     }
+    // }
 }

@@ -16,7 +16,8 @@ router.route("/review").post(ReviewsController.apiPostReview);
 router.route("/review").put(ReviewsController.apiUpdateReview);
 router.route("/review").delete(ReviewsController.apiDeleteReview);
 
-router.route("/user/id/:id").get(UsersController.apiGetUserById);
+router.route("/user").get(UsersController.apiGetUserById);
+
 
 router.route("/user").post(UsersController.apiCreateUser);
 router.route("/user").put(UsersController.apiUpdateUser);

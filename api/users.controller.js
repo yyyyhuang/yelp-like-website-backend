@@ -1,6 +1,5 @@
 import UsersDAO from "../dao/usersDAO.js";
 
-
 export default class UsersController {
     static async apiCreateUser(req, res, next) {
         try {
@@ -63,9 +62,8 @@ export default class UsersController {
     
     static async apiGetUserById(req, res, next) {
         try {
-            let user_id = req.body.user_id;
-            let name = req.body.name;
-            let user = await UsersDAO.getUserById(user_id);
+            let id = req.query.id;
+            let user = await UsersDAO.getUserById(id);
             if (!user) {
                 res.status(404).json({ error: "not found" });
                 return;
