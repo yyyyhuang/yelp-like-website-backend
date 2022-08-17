@@ -27,15 +27,12 @@ export default class RestaurantsDAO {
         restaurants.createIndex( { name: "text" } );
 
         let query;
-        //  = {coordinate : { $near : [x, y], $maxDistance: 0.0025 } }
+
                     
         if (filters) {
             if ("name" in filters) {
                 query = { $text: { $search: filters['name']}};
             } 
-            // else if ("stars" in filters) {
-            //     query = { "stars": { $eq: filters['stars']}}
-            // }
         }
 
         // make actual query using MongoDB cursor object

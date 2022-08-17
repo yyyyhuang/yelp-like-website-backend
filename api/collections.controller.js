@@ -86,9 +86,7 @@ export default class CollectionsController {
      
     static async apiGetFavoritesByCollectionId(req, res, next) {
         try {
-            console.log(req.params.id);
             let id = req.params.id;
-            console.log(id);
             let favorites = await CollectionsDAO.getFavoritesByCollectionId(id);
             if (!favorites) {
                 // res.status(404).json({ error: "not found" });

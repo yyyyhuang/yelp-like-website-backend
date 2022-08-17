@@ -18,7 +18,8 @@ export default class ReviewsController {
                 userInfo,
                 text,
                 date,
-                stars
+                stars,
+                
             );
 
             var { error } = reviewResponse;
